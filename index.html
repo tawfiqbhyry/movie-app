@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie app</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="scripts.js" defer></script>
+    <script src="data.js"></script>
+    <link rel="stylesheet" href="fontawesome/css/all.min.css" />
+  </head>
+  <body>
+    <div class="show-movie">
+      <div class="header">
+        <div></div>
+        <h2 id="title"></h2>
+        <i id="icon-remove" class="fa fa-times" aria-hidden="true"></i>
+      </div>
+
+      <img src="" alt="" />
+
+      <div id="description"></div>
+      <div id="rating"></div>
+      <div id="release-date"></div>
+    </div>
+
+    
+    <div class="main-container">
+      <div class="header">
+        <input
+          type="text"
+          name="search"
+          id="search-box"
+          title="enter word and press enter:"
+        />
+        <div class="lang">
+          <i class="fad fa-angle-down"></i>
+        </div>
+      </div>
+      <div id="myDropdown" class="dropdown-content"></div>
+    </div>
+
+    <div class="movies-con">
+      <div class="movies"></div>
+    </div>
+  </body>
+</html>

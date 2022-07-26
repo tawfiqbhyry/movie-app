@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", "san-serif";
+}
+
+.main-container {
+  width: 600px;
+  margin: 100px auto;
+  border: 2px solid #fcfcfc;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.header #search-box {
+  margin-right: 10px;
+}
+
+.header #search-box {
+  width: 80%;
+  border: none;
+  outline: none;
+  border: 1px solid #fcf;
+  height: 2.5rem;
+  border-radius: 5px;
+}
+
+.main-container #myDropdown {
+  display: none;
+  justify-self: center;
+  flex-direction: column;
+  align-self: center;
+  width: 10%;
+  font-size: 0.8rem;
+  z-index: 1000;
+}
+
+.main-container #myDropdown div {
+  border-bottom: 1px solid #fcf;
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.main-container .lang:hover,
+.main-container #myDropdown div:hover,
+.movie:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.movies-con .movies {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.movie {
+  margin: 2rem 0;
+  width: calc((100% - 100px) / 5);
+  border-bottom: 1px solid #fcf;
+  margin: 10px;
+  max-height: 600px;
+}
+
+.show-movie {
+  display: none;
+  padding: 1rem;
+  color: grey;
+  width: 50%;
+  z-index: 100000;
+  margin: 100px 25%;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fcf;
+}
+
+.show-movie .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.show-movie .header i {
+  transform: scale(1.1);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.blur {
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+}
+
+@media (max-width: 762px) {
+  .main-container {
+    width: 400px;
+  }
+  .movie {
+    width: calc((100% - 100px) / 2);
+  }
+  .show-movie {
+    width: 90%;
+    margin: 100px 2.5%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .movie {
+    width: calc((100% - 100px) / 3);
+  }
+  .show-movie {
+    width: 70%;
+    margin: 100px 15%;
+  }
+}

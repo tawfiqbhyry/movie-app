@@ -70,6 +70,7 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .movie {
@@ -169,18 +170,17 @@ body {
 }
 
 .movie .movie-text {
-  display: none;
-  height: 100%;
+  background-color: #fff;
+  display: flex;
   width: 90%;
   padding: 2rem;
   align-items: center;
   justify-content: center;
   transform: translateY(200%);
-  transition: 0.3s;
+  transition: transform 0.3s ease-in;
 }
 
 .movie:hover .movie-text {
-  display: flex;
   position: absolute;
   background-color: #fff;
   transform: translateY(-100%);

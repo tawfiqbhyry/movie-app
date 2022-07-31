@@ -168,16 +168,16 @@ document.addEventListener("keydown", async (key) => {
 
 function loadImages() {
   imagesArray.forEach(async (image) => {
-    var checkExist = setInterval(function () {
-      var isLoaded = image.el.complete && image.el.naturalHeight !== 0;
-      if (isLoaded) {
-        clearInterval(checkExist);
-      } else {
+    var isLoaded = image.el.complete && image.el.naturalHeight !== 0;
+    if (!isLoaded) {
+      image.el.addEventListener("mouseover", async () => {
         try {
           image.el.src = `https://image.tmdb.org/t/p/original/${image.src}`;
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         } catch (e) {}
-      }
-    }, 400);
+      });
+    } else {
+    }
   });
   imagesArray = [];
 }

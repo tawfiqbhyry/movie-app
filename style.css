@@ -185,3 +185,9 @@ body {
   background-color: #fff;
   transform: translateY(-100%);
 }
+
+#genre-ids {
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+}

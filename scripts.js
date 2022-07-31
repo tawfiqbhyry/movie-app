@@ -57,9 +57,9 @@ async function showData(movies) {
   main.innerHTML = "";
   if (movies) {
     movies.forEach((movie) => {
-      console.log(movie);
+      let text = movie.title;
       if (movie.title.split(" ").length > 3) {
-        movie.title = movie.title.split(" ").slice(0, 3).join(" ");
+        text = movie.title.split(" ").slice(0, 3).join(" ");
       }
       if (movie.poster_path) {
         let el = document.createElement("div");
@@ -68,7 +68,7 @@ async function showData(movies) {
       <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}" alt="" width="100%">
       <div class="movie-info">
         <div class= "movie-data">
-          <h2>${movie.title}</h2>
+          <h2>${text}</h2>
           <p>Rating: ${movie.vote_average}</p>
         </div>
       </div>
@@ -129,7 +129,9 @@ async function showData(movies) {
           if (movie.genre_ids) {
             movie.genre_ids.forEach((genre) => {
               let el = document.createElement("li");
-              el.innerText = `${genre}`;
+              el.innerText = `${
+                genres[genre] ? genres[genre] : "genres_id : " + genre
+              }`;
               genre_ids.appendChild(el);
             });
           } else {
@@ -175,7 +177,7 @@ function loadImages() {
           image.el.src = `https://image.tmdb.org/t/p/original/${image.src}`;
         } catch (e) {}
       }
-    }, 200);
+    }, 400);
   });
   imagesArray = [];
 }

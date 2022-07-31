@@ -7,12 +7,12 @@
 
 body {
   font-family: "Poppins", "san-serif";
+  background-color: black;
 }
 
 .main-container {
   width: 600px;
   margin: 100px auto;
-  border: 2px solid #fcfcfc;
   border-radius: 5px;
   padding: 10px;
   display: flex;
@@ -55,10 +55,13 @@ body {
 }
 
 .main-container .lang:hover,
-.main-container #myDropdown div:hover,
-.movie:hover {
+.main-container #myDropdown div:hover {
   transform: scale(1.1);
   transition: 0.3s;
+  cursor: pointer;
+}
+
+.movie:hover {
   cursor: pointer;
 }
 
@@ -71,10 +74,40 @@ body {
 
 .movie {
   margin: 2rem 0;
-  width: calc((100% - 100px) / 5);
+  width: 450px;
   border-bottom: 1px solid #fcf;
-  margin: 10px;
+  margin: 10px auto;
   max-height: 600px;
+  overflow: hidden;
+}
+
+.movies-con .movies .movie .movie-info .movie-data {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  align-items: center;
+}
+
+.movies-con .movies .movie .movie-info .movie-data p {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  width: 30%;
+  display: flex;
+  align-self: flex-start;
+}
+
+.movies-con .movies .movie {
+  background-color: #fcf;
+  border-radius: 10px;
+}
+
+.movie img {
+  height: 90%;
+}
+
+.movie .movie-info {
+  height: 10%;
 }
 
 .show-movie {
@@ -108,23 +141,47 @@ body {
 
 @media (max-width: 762px) {
   .main-container {
-    width: 400px;
-  }
-  .movie {
-    width: calc((100% - 100px) / 2);
+    width: 100%;
   }
   .show-movie {
     width: 90%;
     margin: 100px 2.5%;
   }
+
+  .movie {
+    margin: 10px auto;
+    width: 300px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .movie {
-    width: calc((100% - 100px) / 3);
-  }
   .show-movie {
     width: 70%;
     margin: 100px 15%;
   }
+  .movie {
+    width: 500px;
+  }
+}
+
+.movies-con .movies .movie {
+  position: relative;
+}
+
+.movie .movie-text {
+  display: none;
+  height: 100%;
+  width: 90%;
+  padding: 2rem;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(200%);
+  transition: 0.3s;
+}
+
+.movie:hover .movie-text {
+  display: flex;
+  position: absolute;
+  background-color: #fff;
+  transform: translateY(-100%);
 }

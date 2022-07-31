@@ -16,6 +16,8 @@ dropedown.addEventListener("click", () => {
   });
 });
 
+let imagesArray = [];
+
 window.onclick = function (event) {
   if (!event.target.matches(".fa-angle-down")) {
     var dropdowns = document.getElementById("myDropdown");
@@ -48,70 +50,132 @@ async function getMovies() {
   }
 }
 
-function showData(movies) {
+async function showData(movies) {
+  imagesArray = [];
   main = document.querySelector(".movies-con .movies");
   let searchHeader = document.querySelector(".main-container .header");
   main.innerHTML = "";
   if (movies) {
     movies.forEach((movie) => {
       console.log(movie);
-      let el = document.createElement("div");
-      el.classList.add("movie");
-      let arrayData = movie.overview.split(" ");
-      let text = "";
-      arrayData.forEach((data) => {
-        if (arrayData.indexOf(data) < 5) {
-          text += `${data} `;
-        }
-      });
-      text += "...";
-      el.innerHTML = `
+      if (movie.title.split(" ").length > 3) {
+        movie.title = movie.title.split(" ").slice(0, 3).join(" ");
+      }
+      if (movie.poster_path) {
+        let el = document.createElement("div");
+        el.classList.add("movie");
+        el.innerHTML = `
       <img src="https://image.tmdb.org/t/p/original/${movie.poster_path}" alt="" width="100%">
       <div class="movie-info">
-        <h2>${movie.title}</h2>
-        <p>${text}</p>
-        <p>Released in: ${movie.release_date}</p>
-        <p>Rating: ${movie.vote_average}</p>
+        <div class= "movie-data">
+          <h2>${movie.title}</h2>
+          <p>Rating: ${movie.vote_average}</p>
+        </div>
+      </div>
+      <div class="movie-text">
+        ${movie.overview}
       </div>
       `;
-      el.addEventListener("click", () => {
-        titleEl = document.querySelector(".show-movie #title");
-        imgEL = document.querySelector(".show-movie img");
-        imgEL.style.width = "100%";
-        descriptionEL = document.querySelector(".show-movie #description");
-        ratingEL = document.querySelector(".show-movie #rating");
-        releaseDateEL = document.querySelector(".show-movie #release-date");
-
-        titleEl.innerText = movie.title;
-        imgEL.src = `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
-        descriptionEL.innerText = `overview: ${movie.overview}`;
-        ratingEL.innerText = `rating: ${movie.vote_average}`;
-        releaseDateEL.innerText = `release date: ${movie.release_date}`;
-
-        document
-          .querySelector(".show-movie .header i")
-          .addEventListener("click", () => {
-            document.querySelector(".show-movie").style.display = "none";
-            main.style.display = "flex";
-            searchHeader.style.display = "flex";
+        el.addEventListener("click", () => {
+          titleEl = document.querySelector(".show-movie #title");
+          imgEL = document.querySelector(".show-movie img");
+          imgEL.style.width = "100%";
+          imagesArray.push({
+            el: document.querySelector(".movie img"),
+            src: movie.poster_path,
           });
-        document.querySelector(".show-movie").style.display = "flex";
-        main.style.display = "none";
-        searchHeader.style.display = "none";
-      });
-      main.appendChild(el);
+          descriptionEL = document.querySelector(".show-movie #description");
+          ratingEL = document.querySelector(".show-movie #rating");
+          const originalLang = document.querySelector(
+            ".show-movie #original-lang span"
+          );
+          const originalTtile = document.querySelector(
+            ".show-movie #original-title span"
+          );
+          const adult = document.querySelector(".show-movie .adult span");
+          const popularity = document.querySelector(
+            ".show-movie #popularity span"
+          );
+          const genre_ids = document.querySelector(".show-movie #genre-ids");
+
+          releaseDateEL = document.querySelector(".show-movie #release-date");
+          titleEl.innerText = movie.title;
+          imgEL.src = `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
+          descriptionEL.innerText = `overview: ${movie.overview}`;
+          ratingEL.innerText = `rating: ${movie.vote_average}`;
+          releaseDateEL.innerText = `release date: ${movie.release_date}`;
+
+          if (movie.original_language) {
+            originalLang.innerText = `${movie.original_language}`;
+          } else {
+            originalLang.innerText = "not specified";
+          }
+          if (movie.original_title) {
+            originalTtile.innerText = `${movie.original_title}`;
+          } else {
+            originalTtile.innerText = "not specified";
+          }
+          if (movie.adult) {
+            adult.innerText = `${movie.adult} ? "yes": "no"`;
+          } else {
+            adult.innerText = "not specified";
+          }
+
+          if (movie.popularity) {
+            popularity.innerText = `${movie.popularity}`;
+          } else {
+            popularity.innerText = "not specified";
+          }
+          if (movie.genre_ids) {
+            movie.genre_ids.forEach((genre) => {
+              let el = document.createElement("li");
+              el.innerText = `${genre}`;
+              genre_ids.appendChild(el);
+            });
+          } else {
+            genre_ids.innerText = "no genres specified";
+          }
+          document
+            .querySelector(".show-movie .header i")
+            .addEventListener("click", () => {
+              document.querySelector(".show-movie").style.display = "none";
+              main.style.display = "flex";
+              searchHeader.style.display = "flex";
+            });
+          document.querySelector(".show-movie").style.display = "flex";
+          main.style.display = "none";
+          searchHeader.style.display = "none";
+        });
+        main.appendChild(el);
+      }
     });
   }
 }
 
 search.addEventListener("input", async () => {
   const data = await getMovies();
-  showData(data);
+  await showData(data);
 });
 
 document.addEventListener("keydown", async (key) => {
   if (key.key == "Enter") {
     const data = await getMovies();
-    showData(data);
+    await showData(data);
   }
 });
+
+function loadImages() {
+  imagesArray.forEach(async (image) => {
+    var checkExist = setInterval(function () {
+      var isLoaded = image.el.complete && image.el.naturalHeight !== 0;
+      if (isLoaded) {
+        clearInterval(checkExist);
+      } else {
+        try {
+          image.el.src = `https://image.tmdb.org/t/p/original/${image.src}`;
+        } catch (e) {}
+      }
+    }, 200);
+  });
+  imagesArray = [];
+}
